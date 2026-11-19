@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:uap7="http://schemas.microsoft.com/appx/manifest/uap/windows10/7"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap uap3 desktop rescap">
+
+  <Identity
+    Name="CustomWidgets.WidgetProvider"
+    Publisher="CN=CustomWidgets Development"
+    Version="1.2.8.0"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>Eigene Widgets</DisplayName>
+    <PublisherDisplayName>CustomWidgets</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>Widgets für Wiedergabe und Systemwerte</Description>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily
+      Name="Windows.Desktop"
+      MinVersion="10.0.22621.0"
+      MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="de-DE" />
+    <Resource Language="en-US" />
+  </Resources>
+
+  <Applications>
+    <Application
+      Id="WidgetProvider"
+      Executable="CustomWidgets.WidgetProvider.exe"
+      EntryPoint="Windows.FullTrustApplication">
+
+      <uap:VisualElements
+        AppListEntry="none"
+        DisplayName="Eigene Widgets"
+        Description="Widgets für Wiedergabe und Systemwerte"
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png" />
+
+      <Extensions>
+        <!-- Out-of-process COM server that implements IWidgetProvider. -->
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:ExeServer
+              Executable="CustomWidgets.WidgetProvider.exe"
+              Arguments="-RegisterProcessAsComServer"
+              DisplayName="Eigene Widgets - Widget-Anbieter">
+              <com:Class
+                Id="59D3A472-B0E7-45FC-865B-68863B7D3DC3"
+                DisplayName="CustomWidgets Widget Provider" />
+            </com:ExeServer>
+          </com:ComServer>
+        </com:Extension>
+
+        <!-- Starts the interactive desktop host at login. A normal launch of the
+             executable starts the same host; COM activation uses the arguments
+             declared on the com:ExeServer above. -->
+        <desktop:Extension Category="windows.startupTask" Executable="CustomWidgets.WidgetProvider.exe" EntryPoint="Windows.FullTrustApplication">
+          <desktop:StartupTask TaskId="CustomWidgetsDesktopHost" Enabled="true" DisplayName="Eigene Widgets Desktop" />
+        </desktop:Extension>
+
+        <!-- Widget provider registration consumed by the Widgets Board. -->
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension
+            Name="com.microsoft.windows.widgets"
+            DisplayName="Eigene Widgets"
+            Id="CustomWidgets.WidgetProvider.Extension">
+            <uap3:Properties>
+              <WidgetProvider>
+                <ProviderIcons>
+                  <Icon Path="Assets\ProviderIcon.png" />
+                </ProviderIcons>
+                <Activation>
+                  <!-- Must match WidgetProvider.ClassId and com:Class Id above. -->
+                  <CreateInstance ClassId="59D3A472-B0E7-45FC-865B-68863B7D3DC3" />
+                </Activation>
+                <Definitions>
+                  <Definition
+                    Id="NowPlayingWidget"
+                    DisplayName="Jetzt läuft"
+                    Description="Titel, Interpret und Cover der aktuellen Wiedergabe"
+                    AllowMultiple="false">
+                    <Capabilities>
+                      <!-- small is required for lock screen widgets. -->
+                      <Capability>
+                        <Size Name="small" />
+                      </Capability>
+                      <Capability>
+                        <Size Name="medium" />
+                      </Capability>
+                    </Capabilities>
+                    <ThemeResources>
+                      <Icons>
+                        <Icon Path="Assets\NowPlayingIcon.png" />
+                      </Icons>
+                      <Screenshots>
+                        <Screenshot Path="Assets\NowPlayingScreenshot.png" DisplayAltText="Vorschau des Widgets Jetzt läuft" />
+                      </Screenshots>
+                      <DarkMode>
+                        <Icons>
+                          <Icon Path="Assets\NowPlayingIcon.png" />
+                        </Icons>
+                        <Screenshots>
+                          <Screenshot Path="Assets\NowPlayingScreenshotDark.png" DisplayAltText="Vorschau des Widgets Jetzt läuft in dunkler Darstellung" />
+                        </Screenshots>
+                      </DarkMode>
+                      <LightMode>
+                        <Icons>
+                          <Icon Path="Assets\NowPlayingIcon.png" />
+                        </Icons>
+                        <Screenshots>
+                          <Screenshot Path="Assets\NowPlayingScreenshotLight.png" DisplayAltText="Vorschau des Widgets Jetzt läuft in heller Darstellung" />
+                        </Screenshots>
+                      </LightMode>
+                    </ThemeResources>
+                  </Definition>
+
+                  <Definition
+                    Id="SystemWidget"
+                    DisplayName="System"
+                    Description="CPU-Auslastung, Arbeitsspeicher und Akkustand"
+                    AllowMultiple="false">
+                    <Capabilities>
+                      <Capability>
+                        <Size Name="small" />
+                      </Capability>
+                      <Capability>
+                        <Size Name="medium" />
+                      </Capability>
+                    </Capabilities>
+                    <ThemeResources>
+                      <Icons>
+                        <Icon Path="Assets\SystemIcon.png" />
+                      </Icons>
+                      <Screenshots>
+                        <Screenshot Path="Assets\SystemScreenshot.png" DisplayAltText="Vorschau des System-Widgets" />
+                      </Screenshots>
+                      <DarkMode>
+                        <Icons>
+                          <Icon Path="Assets\SystemIcon.png" />
+                        </Icons>
+                        <Screenshots>
+                          <Screenshot Path="Assets\SystemScreenshotDark.png" DisplayAltText="Vorschau des System-Widgets in dunkler Darstellung" />
+                        </Screenshots>
+                      </DarkMode>
+                      <LightMode>
+                        <Icons>
+                          <Icon Path="Assets\SystemIcon.png" />
+                        </Icons>
+                        <Screenshots>
+                          <Screenshot Path="Assets\SystemScreenshotLight.png" DisplayAltText="Vorschau des System-Widgets in heller Darstellung" />
+                        </Screenshots>
+                      </LightMode>
+                    </ThemeResources>
+                  </Definition>
+                </Definitions>
+              </WidgetProvider>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+    <!-- Needed by GlobalSystemMediaTransportControlsSessionManager. Sideloading
+         apps may declare this restricted capability without Store approval. -->
+    <uap7:Capability Name="globalMediaControl" />
+  </Capabilities>
+</Package>
