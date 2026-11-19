@@ -83,8 +83,7 @@ Ergebnis:
 
 ```text
 artifacts/CustomWidgets.msix      signiertes Paket (ca. 115 MB, inkl. WPF-Desktop-Host)
-artifacts/dev-cert.cer            öffentliches Dev-Zertifikat
-artifacts/dev-cert.pfx            Dev-Zertifikat inkl. privatem Schlüssel (nicht weitergeben)
+artifacts/dev-cert.cer            öffentliches Dev-Zertifikat für die Installation
 artifacts/layout/                 entpacktes MSIX-Layout
 ```
 

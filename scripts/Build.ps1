@@ -101,15 +101,12 @@ if (-not $SkipSign) {
             -NotAfter (Get-Date).AddYears(3)
     }
 
-    $pfxPath = Join-Path $outputRoot 'dev-cert.pfx'
     $cerPath = Join-Path $outputRoot 'dev-cert.cer'
-    $passwordPlain = 'CustomWidgetsDev!'
-    $password = ConvertTo-SecureString $passwordPlain -AsPlainText -Force
-
-    Export-PfxCertificate -Cert $certificate -FilePath $pfxPath -Password $password | Out-Null
     Export-Certificate -Cert $certificate -FilePath $cerPath | Out-Null
 
-    & $signTool.FullName sign /fd SHA256 /f $pfxPath /p $passwordPlain $msixPath
+    # Sign with the certificate from the current user's store. This needs neither
+    # a PFX file nor a password, so no secret is stored in the repository.
+    & $signTool.FullName sign /fd SHA256 /sha1 $certificate.Thumbprint $msixPath
     if ($LASTEXITCODE -ne 0) {
         throw 'signtool failed.'
     }

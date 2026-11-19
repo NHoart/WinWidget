@@ -1,8 +1,31 @@
+# Build output
 bin/
 obj/
 artifacts/
+publish/
 .vs/
 .tmp/
+
+# MSIX packaging output
+*.msix
+*.msixbundle
+*.msixupload
+*.appx
+*.appxbundle
+*.appxupload
+
+# Certificates and keys
+*.pfx
+*.cer
+*.snk
+
+# Local and user-specific files
 *.user
 *.suo
-*.pfx
+.env
+.env.*
+!.env.example
+*.log
+
+# Tooling
+.freebuff/
