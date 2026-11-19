@@ -393,7 +393,6 @@ Get-ChildItem Cert:\LocalMachine\TrustedPeople |
 
 Zum Aktualisieren des Windows App SDK die `PackageReference` in `WidgetProvider.csproj` anpassen und neu bauen. Die Widget-APIs sind seit 1.6 stabil; das Projekt nutzt die aktuelle 2.x-Linie.
 
-
 ## Lizenz
 
 WinWidget ist **kein Open-Source-Projekt**. Die Nutzungsbedingungen stehen in [LICENSE](LICENSE); Hinweise für Beiträge in [CONTRIBUTING.md](CONTRIBUTING.md).
