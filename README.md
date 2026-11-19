@@ -41,6 +41,8 @@ src/WidgetProvider/
   Program.cs                   Desktop-Host (ohne Argumente) oder COM-Server
   WidgetProvider.cs            IWidgetProvider-Implementierung und Widget-Lebenszyklus
   Cards.cs                     Adaptive-Card-JSON für beide Widgets und Größen
+  Log.cs                       Dateilogger unter %LOCALAPPDATA%\CustomWidgets\logs
+  WidgetIds.cs                 Widget-IDs für Manifest und Code
   Com/WidgetProviderFactory.cs COM-Klassenfabrik
   Desktop/
     DesktopHost.cs             STA-Thread und Single-Instance-Mutex
@@ -49,6 +51,7 @@ src/WidgetProvider/
     DesktopHostSettings.cs     gespeicherte Fensterposition (JSON)
     DesktopLayer.cs            Tool-Fenster, Position und Z-Order
     VolumeController.cs        Master-Lautstärke über Core Audio (WASAPI)
+  Services/MediaAppLauncher.cs Öffnet die App der aktuellen Wiedergabe
   Services/MediaWatcher.cs     GSMTC-Ereignisse, Wiedergabebefehle, Cover
   Services/SystemMetricsService.cs  CPU/RAM/Akku auf Anforderung
   Assets/                      Logos, Widget-Icons, helle/dunkle Picker-Screenshots
@@ -389,3 +392,8 @@ Get-ChildItem Cert:\LocalMachine\TrustedPeople |
 | Architektur | x64 |
 
 Zum Aktualisieren des Windows App SDK die `PackageReference` in `WidgetProvider.csproj` anpassen und neu bauen. Die Widget-APIs sind seit 1.6 stabil; das Projekt nutzt die aktuelle 2.x-Linie.
+
+
+## Lizenz
+
+WinWidget ist **kein Open-Source-Projekt**. Die Nutzungsbedingungen stehen in [LICENSE](LICENSE); Hinweise für Beiträge in [CONTRIBUTING.md](CONTRIBUTING.md).
